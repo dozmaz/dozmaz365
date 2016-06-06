@@ -1,0 +1,84 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(array("fases", "Atrás")) ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>
+        Edit fases
+    </h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "fases/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldNombre" class="col-sm-2 control-label">NOMBRE</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("NOMBRE", "size" => 30, "class" => "form-control", "id" => "fieldNombre")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldCampeonatoId" class="col-sm-2 control-label">CAMPEONATO Of ID</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("CAMPEONATO_ID", "type" => "number", "class" => "form-control", "id" => "fieldCampeonatoId")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldNumero" class="col-sm-2 control-label">NUMERO</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("NUMERO", "type" => "number", "class" => "form-control", "id" => "fieldNumero")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldAudUsuario" class="col-sm-2 control-label">AUD Of USUARIO</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("AUD_USUARIO", "type" => "number", "class" => "form-control", "id" => "fieldAudUsuario")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldAudFecha" class="col-sm-2 control-label">AUD Of FECHA</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("AUD_FECHA", "type" => "number", "class" => "form-control", "id" => "fieldAudFecha")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldAudEstado" class="col-sm-2 control-label">AUD Of ESTADO</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("AUD_ESTADO", "type" => "number", "class" => "form-control", "id" => "fieldAudEstado")) ?>
+    </div>
+</div>
+
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("Guardar", "class" => "btn btn-default")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

@@ -1,0 +1,119 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="page-header">
+    <h1>
+        Buscar partidos
+    </h1>
+    <p>
+        <?php echo $this->tag->linkTo(array("partidos/new", "Crear partidos")) ?>
+    </p>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "partidos/search",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+<?php /*
+<div class="form-group">
+    <label for="fieldPartidosId" class="col-sm-2 control-label">PARTIDOS Of ID</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("PARTIDOS_ID", "type" => "number", "class" => "form-control", "id" => "fieldPartidosId")) ?>
+    </div>
+</div>
+*/?>
+<div class="form-group">
+    <label for="fieldLocal" class="col-sm-2 control-label">LOCAL</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("LOCAL", "type" => "number", "class" => "form-control", "id" => "fieldLocal")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldVisitante" class="col-sm-2 control-label">VISITANTE</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("VISITANTE", "type" => "number", "class" => "form-control", "id" => "fieldVisitante")) ?>
+    </div>
+</div>
+<?php /*
+<div class="form-group">
+    <label for="fieldGolesLocal" class="col-sm-2 control-label">GOLES Of LOCAL</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("GOLES_LOCAL", "type" => "number", "class" => "form-control", "id" => "fieldGolesLocal")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldGolesVisitante" class="col-sm-2 control-label">GOLES Of VISITANTE</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("GOLES_VISITANTE", "type" => "number", "class" => "form-control", "id" => "fieldGolesVisitante")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldPenalesLocal" class="col-sm-2 control-label">PENALES Of LOCAL</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("PENALES_LOCAL", "type" => "number", "class" => "form-control", "id" => "fieldPenalesLocal")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldPenalesVisitante" class="col-sm-2 control-label">PENALES Of VISITANTE</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("PENALES_VISITANTE", "type" => "number", "class" => "form-control", "id" => "fieldPenalesVisitante")) ?>
+    </div>
+</div>
+*/?>
+<div class="form-group">
+    <label for="fieldFasesId" class="col-sm-2 control-label">FASES Of ID</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("FASES_ID", "type" => "number", "class" => "form-control", "id" => "fieldFasesId")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldFecha" class="col-sm-2 control-label">FECHA</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("FECHA", "size" => 30, "class" => "form-control", "id" => "fieldFecha")) ?>
+    </div>
+</div>
+<?php /*
+<div class="form-group">
+    <label for="fieldAudUsuario" class="col-sm-2 control-label">AUD Of USUARIO</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("AUD_USUARIO", "type" => "number", "class" => "form-control", "id" => "fieldAudUsuario")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldAudFecha" class="col-sm-2 control-label">AUD Of FECHA</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("AUD_FECHA", "type" => "number", "class" => "form-control", "id" => "fieldAudFecha")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldAudEstado" class="col-sm-2 control-label">AUD Of ESTADO</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("AUD_ESTADO", "type" => "number", "class" => "form-control", "id" => "fieldAudEstado")) ?>
+    </div>
+</div>
+*/?>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("Buscar", "class" => "btn btn-default")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

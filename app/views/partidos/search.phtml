@@ -1,0 +1,77 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(array("partidos/index", "Go Back")); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(array("partidos/new", "Crear ")); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Buscar result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>PARTIDOS Of ID</th>
+            <th>LOCAL</th>
+            <th>VISITANTE</th>
+            <th>GOLES Of LOCAL</th>
+            <th>GOLES Of VISITANTE</th>
+            <th>PENALES Of LOCAL</th>
+            <th>PENALES Of VISITANTE</th>
+            <th>FASES Of ID</th>
+            <th>FECHA</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $partido): ?>
+            <tr>
+                <td><?php echo $partido->PARTIDOS_ID ?></td>
+                <td><?php echo $partido->getLocal()->NOMBRE ?></td>
+                <td><?php echo $partido->getVisitante()->NOMBRE ?></td>
+                <td><?php echo $partido->GOLES_LOCAL ?></td>
+                <td><?php echo $partido->GOLES_VISITANTE ?></td>
+                <td><?php echo $partido->PENALES_LOCAL ?></td>
+                <td><?php echo $partido->PENALES_VISITANTE ?></td>
+                <td><?php echo $partido->FASES->NOMBRE ?></td>
+                <td><?php echo $partido->FECHA ?></td>
+                <td><?php echo $this->tag->linkTo(array("partidos/edit/" . $partido->PARTIDOS_ID, "Editar")); ?></td>
+                <td><?php echo $this->tag->linkTo(array("partidos/delete/" . $partido->PARTIDOS_ID, "Eliminar")); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("partidos/search", "Primero") ?></li>
+                <li><?php echo $this->tag->linkTo("partidos/search?page=" . $page->before, "Anterior") ?></li>
+                <li><?php echo $this->tag->linkTo("partidos/search?page=" . $page->next, "Siguiente") ?></li>
+                <li><?php echo $this->tag->linkTo("partidos/search?page=" . $page->last, "Último") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

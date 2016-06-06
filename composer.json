@@ -1,0 +1,12 @@
+{
+  "name": "phalcon/dozmaz365",
+  "description": "Sistema de pronosticos deportivos",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Guido Cutipa",
+      "email": "dozmaz@gmail.com"
+    }
+  ]
+}

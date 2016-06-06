@@ -1,0 +1,75 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(array("fases/index", "Go Back")); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(array("fases/new", "Crear ")); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Buscar result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>FASES Of ID</th>
+            <th>NOMBRE</th>
+            <th>CAMPEONATO Of ID</th>
+            <th>NUMERO</th>
+            <th>AUD Of USUARIO</th>
+            <th>AUD Of FECHA</th>
+            <th>AUD Of ESTADO</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $fase): ?>
+            <tr>
+                <td><?php echo $fase->FASES_ID ?></td>
+            <td><?php echo $fase->NOMBRE ?></td>
+            <td><?php echo $fase->CAMPEONATO_ID ?></td>
+            <td><?php echo $fase->NUMERO ?></td>
+            <td><?php echo $fase->AUD_USUARIO ?></td>
+            <td><?php echo $fase->AUD_FECHA ?></td>
+            <td><?php echo $fase->AUD_ESTADO ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("fases/edit/" . $fase->FASES_ID, "Editar")); ?></td>
+                <td><?php echo $this->tag->linkTo(array("fases/delete/" . $fase->FASES_ID, "Eliminar")); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("fases/search", "Primero") ?></li>
+                <li><?php echo $this->tag->linkTo("fases/search?page=" . $page->before, "Anterior") ?></li>
+                <li><?php echo $this->tag->linkTo("fases/search?page=" . $page->next, "Siguiente") ?></li>
+                <li><?php echo $this->tag->linkTo("fases/search?page=" . $page->last, "Último") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>
