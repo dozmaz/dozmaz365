@@ -56,10 +56,10 @@ class LoginForm extends Form
         // CSRF
         $csrf = new Hidden('csrf');
 
-        $csrf->addValidator(new Identical(array(
+        /*$csrf->addValidator(new Identical(array(
             'value' => $this->security->getSessionToken(),
             'message' => 'Fall&oacute; la validaci&oacute;n CSRF'
-        )));
+        )));*/
 
         $csrf->clear();
 
