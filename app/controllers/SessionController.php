@@ -83,7 +83,7 @@ class SessionController extends \Phalcon\Mvc\Controller
                         $this->flash->error($message);
                     }
                 } else {
-                    $this->auth->check(array(
+                    $this->auth->checkLdap(array(
                         'email' => $this->request->getPost('email'),
                         'password' => $this->request->getPost('password'),
                         'remember' => $this->request->getPost('remember')

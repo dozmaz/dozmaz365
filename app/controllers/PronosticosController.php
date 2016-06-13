@@ -72,29 +72,39 @@ class PronosticosController extends ControllerBase
                 $campo_goles = "GOLES_" . $campos[0];
                 $partido_id = $campos[1];
                 $equipo_id = $campos[2];
-                $pronostico = Pronosticos::findFirst("PARTIDOS_ID = " . $partido_id . " AND USUARIOS_ID = " . $auth['id']);
-                if (!$pronostico) {
-                    $pronostico = new Pronosticos();
-                    $pronostico->USUARIOS_ID = $auth['id'];
-                    $pronostico->PARTIDOS_ID = $partido_id;
-                    $pronostico->GOLES_LOCAL = 0;
-                    $pronostico->GOLES_VISITANTE = 0;
-                    $pronostico->PUNTOS_USUARIO = 0;
-                }
-                $pronostico->$campo_goles = $goles;
-                $pronostico->AUD_ESTADO = 1;
-                $pronostico->AUD_FECHA = new \Phalcon\Db\RawValue('now()');
-                $pronostico->AUD_USUARIO = $auth['id'];
-                if (!$pronostico->save()) {
-                    foreach ($pronostico->getMessages() as $message) {
-                        $this->flash->error(( string )$message);
+                $pronostico = new Pronosticos();
+                $partido = Partidos::findFirst("PARTIDOS_ID = " . $partido_id);
+                if ($partido && $pronostico->permitidoModificar($partido->FECHA)) {
+                    $pronostico = Pronosticos::findFirst("PARTIDOS_ID = " . $partido_id . " AND USUARIOS_ID = " . $auth['id']);
+                    if (!$pronostico) {
+                        $pronostico = new Pronosticos();
+                        $pronostico->USUARIOS_ID = $auth['id'];
+                        $pronostico->PARTIDOS_ID = $partido_id;
+                        $pronostico->GOLES_LOCAL = 0;
+                        $pronostico->GOLES_VISITANTE = 0;
+                        $pronostico->PUNTOS_USUARIO = 0;
                     }
+                    $pronostico->$campo_goles = $goles;
+                    $pronostico->AUD_ESTADO = 1;
+                    $pronostico->AUD_FECHA = new \Phalcon\Db\RawValue('now()');
+                    $pronostico->AUD_USUARIO = $auth['id'];
+                    if (!$pronostico->save()) {
+                        foreach ($pronostico->getMessages() as $message) {
+                            $this->flash->error(( string )$message);
+                        }
+                        $errores = true;
+                    }
+                } elseif (!$partido) {
+                    $this->flash->error("No existe el partido");
+                    $errores = true;
+                } else {
+                    $this->flash->error("Ya no se pueden registrar pron&oacute;sticos para este partido");
                     $errores = true;
                 }
             }
         }
         if (!$errores) {
-            $this->flash->success("Pronostico registrado");
+            $this->flash->success("Pron&oacute;stico registrado");
         }
         $this->dispatcher->forward(array(
             'controller' => "pronosticos",
@@ -107,7 +117,7 @@ class PronosticosController extends ControllerBase
     {
         $auth = $this->auth->getIdentity();
         $usuarios = Usuarios::find("aud_estado = 1 ORDER BY nombre");
-        $partidos = Partidos::find("AUD_ESTADO = 1 ORDER BY FECHA ");
+        $partidos = Partidos::find("AUD_ESTADO = 1 ORDER BY FECHA DESC");
         $pronosticos = new Pronosticos();
         $pronosticosUsuarios = array();
         foreach ($partidos as $partido) {
@@ -131,11 +141,11 @@ class PronosticosController extends ControllerBase
                         $pronostico->AUD_ESTADO = 1;
                         $pronostico->save();
                     }
-                    $pronosticosUsuarios[$partido->PARTIDOS_ID."_".$usuario->id]["USUARIO_ID"] = $usuario->id;
-                    $pronosticosUsuarios[$partido->PARTIDOS_ID."_".$usuario->id]["NOMBRE"] = $usuario->nombre;
-                    $pronosticosUsuarios[$partido->PARTIDOS_ID."_".$usuario->id]["LOCAL"] = $pronostico->GOLES_LOCAL;
-                    $pronosticosUsuarios[$partido->PARTIDOS_ID."_".$usuario->id]["VISITANTE"] = $pronostico->GOLES_VISITANTE;
-                    $pronosticosUsuarios[$partido->PARTIDOS_ID."_".$usuario->id]["PUNTOS"] = $pronostico->PUNTOS_USUARIO;
+                    $pronosticosUsuarios[$partido->PARTIDOS_ID . "_" . $usuario->id]["USUARIO_ID"] = $usuario->id;
+                    $pronosticosUsuarios[$partido->PARTIDOS_ID . "_" . $usuario->id]["NOMBRE"] = $usuario->nombre;
+                    $pronosticosUsuarios[$partido->PARTIDOS_ID . "_" . $usuario->id]["LOCAL"] = $pronostico->GOLES_LOCAL;
+                    $pronosticosUsuarios[$partido->PARTIDOS_ID . "_" . $usuario->id]["VISITANTE"] = $pronostico->GOLES_VISITANTE;
+                    $pronosticosUsuarios[$partido->PARTIDOS_ID . "_" . $usuario->id]["PUNTOS"] = $pronostico->PUNTOS_USUARIO;
                 }
             }
         }
@@ -162,7 +172,7 @@ class PronosticosController extends ControllerBase
             $usuario = Usuarios::findFirst("id = " . $posicion->USUARIOS_ID);
             $puntuaciones[$posicion->USUARIOS_ID]["NOMBRE"] = $usuario->nombre;
             $puntuaciones[$posicion->USUARIOS_ID]["PUNTOS"] = $posicion->sumatory;
-            $puntuaciones[$posicion->USUARIOS_ID]["PORCENTAJE"] = ($posicion->sumatory / $puntoMaximo)*100;
+            $puntuaciones[$posicion->USUARIOS_ID]["PORCENTAJE"] = ($posicion->sumatory / $puntoMaximo) * 100;
         }
         $this->view->setVar("usuario_id", $auth['id']);
         $this->view->setVar("puntuaciones", $puntuaciones);

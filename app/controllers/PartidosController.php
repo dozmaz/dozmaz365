@@ -160,7 +160,7 @@ class PartidosController extends ControllerBase
 
         $this->dispatcher->forward(array(
             'controller' => "partidos",
-            'action' => 'index'
+            'action' => 'search'
         ));
     }
 
@@ -228,7 +228,7 @@ class PartidosController extends ControllerBase
 
         $this->dispatcher->forward(array(
             'controller' => "partidos",
-            'action' => 'index'
+            'action' => 'search'
         ));
     }
 
@@ -299,7 +299,7 @@ class PartidosController extends ControllerBase
 
         $this->dispatcher->forward(array(
             'controller' => "partidos",
-            'action' => "index"
+            'action' => "search"
         ));
     }
 
