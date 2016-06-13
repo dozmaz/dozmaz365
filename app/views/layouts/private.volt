@@ -84,6 +84,9 @@
                                     {%- endfor -%}
                                 </ul>
                             </li>
+                            <li>
+                                {{ link_to('session/logout', '<i class="fa fa-sign-out"></i> Cerrar sesi&oacute;n') }}
+                            </li>
                         </ul>
                     </div>
                     {% endif %}
@@ -104,26 +107,6 @@
                     </div>
                     <div class="col-md-8 col-xs-6 col-sm-8 col-lg-9 titulo row">
                         <h2>{{ title }}</h2>
-                    </div>
-                    <div class="col-md-3 col-xs-5 col-sm-3 col-lg-2">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="">
-                                {{ link_to('session/logout', '<i class="fa fa-sign-out pull-right"></i> Cerrar sesi&oacute;n') }}
-                                {#<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                                   aria-expanded="false">
-                                    {{ auth.getName() }}
-                                    <span class=" fa fa-angle-down"></span>
-                                </a> # }
-                                <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li>{{ link_to('usuarios/changePassword', 'Cambiar Contrase&ntilde;a') }}</li>
-                                    <li>
-                                        <a href="javascript:;">Ayuda</a>
-                                    </li>
-                                    <li>{{ link_to('session/logout', '<i class="fa fa-sign-out pull-right"></i> Cerrar sesi&oacute;n') }}
-                                    </li>
-                                </ul>#}
-                            </li>
-                        </ul>
                     </div>
                 </nav>
             </div>

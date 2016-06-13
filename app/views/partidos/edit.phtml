@@ -21,13 +21,13 @@
 <?php echo $this->getContent(); ?>
 
 <?php
-    echo $this->tag->form(
-        array(
-            "partidos/save",
-            "autocomplete" => "off",
-            "class" => "form-horizontal"
-        )
-    );
+echo $this->tag->form(
+    array(
+        "partidos/save",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    )
+);
 ?>
 
 <div class="form-group">
@@ -40,7 +40,7 @@
 <div class="form-group">
     <label for="fieldFecha" class="col-sm-2 control-label">FECHA</label>
     <div class="col-sm-10">
-        <?php echo $this->tag->dateField(array("FECHA", "size" => 30, "class" => "form-control", "id" => "fieldFecha")) ?>
+        <?php echo $this->tag->dateTimeField(array("FECHA", "size" => 30, "class" => "form-control", "id" => "fieldFecha")) ?>
     </div>
 </div>
 
