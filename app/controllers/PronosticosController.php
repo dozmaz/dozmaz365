@@ -33,10 +33,13 @@ class PronosticosController extends ControllerBase
             //OBTENER TODOS LOS PARTIDOS DE UNA FECHA
             $partidosDelDia = Partidos::find("FECHA LIKE '$fechaSeleccionada%'");
 
+            //SI LA FECHA SELECCIONADA NO TIENE PARTIDOS HABILITADOS SE BUSCA LA SIGUIENTE FECHA DISPONIBLE
             if ($partidosDelDia && count($partidosDelDia) <= 0) {
                 foreach ($fechas as $fecha) {
-                    $fechaSeleccionada = $fecha->FECHA_PARTIDO;
-                    break;
+                    if ($pronosticos->permitidoModificar($fecha->FECHA_PARTIDO)) {
+                        $fechaSeleccionada = $fecha->FECHA_PARTIDO;
+                        break;
+                    }
                 }
                 $partidosDelDia = Partidos::find("FECHA LIKE '$fechaSeleccionada%'");
             }
@@ -47,6 +50,7 @@ class PronosticosController extends ControllerBase
 
             $auth = $this->auth->getIdentity();
 
+            //SE CARGAN TODOS LOS PRONOSTICOS REGISTRADOS PARA LOS PARTIDOS DEL DÍA A MOSTRAR
             foreach ($partidosDelDia as $partido) {
                 $pronostico = Pronosticos::findFirst("PARTIDOS_ID = " . $partido->PARTIDOS_ID . " AND USUARIOS_ID = " . $auth['id']);
                 if (!$pronostico) {
@@ -61,6 +65,9 @@ class PronosticosController extends ControllerBase
         }
     }
 
+    /**
+     * Grabar los pronósticos de los partidos
+     */
     public function saveAction()
     {
         $request = $this->request->getPost();
@@ -113,6 +120,9 @@ class PronosticosController extends ControllerBase
         ));
     }
 
+    /**
+     * Lista todos los pronósticos registrados para los partidos
+     */
     public function resultadosAction()
     {
         $auth = $this->auth->getIdentity();
@@ -153,6 +163,9 @@ class PronosticosController extends ControllerBase
         $this->view->setVar("pronosticosUsuarios", $pronosticosUsuarios);
     }
 
+    /**
+     * Lista los puntos obtenidos por los usuarios
+     */
     public function puntuacionesAction()
     {
         $auth = $this->auth->getIdentity();
