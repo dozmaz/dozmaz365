@@ -3,19 +3,11 @@
  * @var \Phalcon\Mvc\View\Engine\Php $this
  */
 ?>
-
+<h1>
+    Editar partidos
+</h1>
 <div class="row">
-    <nav>
-        <ul class="pager">
-            <li class="previous"><?php echo $this->tag->linkTo(array("partidos", "Atrás")) ?></li>
-        </ul>
-    </nav>
-</div>
-
-<div class="page-header">
-    <h1>
-        Edit partidos
-    </h1>
+    <?php echo $this->tag->linkTo(array("partidos", "Atrás", "class" => "btn btn-default")) ?>
 </div>
 
 <?php echo $this->getContent(); ?>
@@ -40,7 +32,7 @@ echo $this->tag->form(
 <div class="form-group">
     <label for="fieldFecha" class="col-sm-2 control-label">FECHA</label>
     <div class="col-sm-10">
-        <?php echo $this->tag->dateTimeField(array("FECHA", "size" => 30, "class" => "form-control", "id" => "fieldFecha")) ?>
+        <?php echo $this->tag->dateTimeLocalField(array("FECHA", "size" => 30, "class" => "form-control", "id" => "fieldFecha")) ?>
     </div>
 </div>
 
@@ -72,21 +64,21 @@ echo $this->tag->form(
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group" style="display: none">
     <label for="fieldPenalesLocal" class="col-sm-2 control-label">PENALES Of LOCAL</label>
     <div class="col-sm-10">
         <?php echo $this->tag->textField(array("PENALES_LOCAL", "type" => "number", "class" => "form-control", "id" => "fieldPenalesLocal")) ?>
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group" style="display: none">
     <label for="fieldPenalesVisitante" class="col-sm-2 control-label">PENALES Of VISITANTE</label>
     <div class="col-sm-10">
         <?php echo $this->tag->textField(array("PENALES_VISITANTE", "type" => "number", "class" => "form-control", "id" => "fieldPenalesVisitante")) ?>
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group" style="display: none">
     <label for="fieldAudEstado" class="col-sm-2 control-label">AUD Of ESTADO</label>
     <div class="col-sm-10">
         <?php echo $this->tag->textField(array("AUD_ESTADO", "type" => "number", "class" => "form-control", "id" => "fieldAudEstado")) ?>

@@ -5,18 +5,11 @@
 ?>
 
 <?php use Phalcon\Tag; ?>
+<h1>Buscar partidos</h1>
 
 <div class="row">
-    <nav>
-        <ul class="pager">
-            <li class="previous"><?php echo $this->tag->linkTo(array("partidos/index", "Go Back")); ?></li>
-            <li class="next"><?php echo $this->tag->linkTo(array("partidos/new", "Crear ")); ?></li>
-        </ul>
-    </nav>
-</div>
-
-<div class="page-header">
-    <h1>Buscar result</h1>
+<?php echo $this->tag->linkTo(array("partidos/index", "Atr&aacute;s","class" => "btn btn-default")); ?>
+<?php echo $this->tag->linkTo(array("partidos/new", "Crear ","class" => "btn btn-primary")); ?>
 </div>
 
 <?php echo $this->getContent(); ?>

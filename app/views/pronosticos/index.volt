@@ -18,8 +18,8 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>{{ partido.FECHA }}
-                        <small>{{ partido.FASES.NOMBRE }}</small>
+                    <h2 class="text-{% if partido.FASES.NOMBRE == "Penales" %}danger{% endif %}">{{ partido.FECHA }}
+                        <span class="btn btn-round btn-{% if partido.FASES.NOMBRE != "Penales" %}dark{% else %}danger{% endif %}" style="color: #FFFFFF;">{{ partido.FASES.NOMBRE }}</span>
                     </h2>
                     <div class="clearfix"></div>
                 </div>
