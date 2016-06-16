@@ -262,7 +262,7 @@ class PartidosController extends ControllerBase
                         $pronostico->save();
                     }
                 }
-                $partido->calcularPuntosObtenidos($partido->PARTIDOS_ID, $partido->GOLES_LOCAL, $partido->GOLES_VISITANTE);
+                $partido->calcularPuntosObtenidos($partido->PARTIDOS_ID, $partido->GOLES_LOCAL, $partido->GOLES_VISITANTE, $partido->Fases->NOMBRE, $partido->PENALES_LOCAL, $partido->PENALES_VISITANTE);
             }
         }
     }
@@ -287,7 +287,6 @@ class PartidosController extends ControllerBase
         }
 
         if (!$partido->delete()) {
-
             foreach ($partido->getMessages() as $message) {
                 $this->flash->error($message);
             }

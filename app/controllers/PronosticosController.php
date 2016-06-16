@@ -125,6 +125,7 @@ class PronosticosController extends ControllerBase
      */
     public function resultadosAction()
     {
+        $this->view->setVar('title', 'Resultados');
         $auth = $this->auth->getIdentity();
         $usuarios = Usuarios::find("aud_estado = 1 ORDER BY nombre");
         $partidos = Partidos::find("AUD_ESTADO = 1 ORDER BY FECHA DESC");
@@ -133,7 +134,8 @@ class PronosticosController extends ControllerBase
         foreach ($partidos as $partido) {
             //mostrar los partidos que ya iniciaron su juego
             if (!$pronosticos->permitidoModificar($partido->FECHA)) {
-                $pronosticosUsuarios[$partido->PARTIDOS_ID]["NOMBRE"] = $partido->getLocal()->NOMBRE . " vs. " . $partido->getVisitante()->NOMBRE;
+                $pronosticosUsuarios[$partido->PARTIDOS_ID]["NOMBRE"] = $partido->getLocal()->NOMBRE . " vs. " . $partido->getVisitante()->NOMBRE. " ".
+                    '<span class="btn btn-round btn-'.($partido->Fases->NOMBRE != "Penales"?'dark':'danger').' " style="color: #FFFFFF;">'.$partido->Fases->NOMBRE.'</span>';
                 $pronosticosUsuarios[$partido->PARTIDOS_ID]["LOCAL"] = $partido->GOLES_LOCAL;
                 $pronosticosUsuarios[$partido->PARTIDOS_ID]["VISITANTE"] = $partido->GOLES_VISITANTE;
                 $pronosticosUsuarios[$partido->PARTIDOS_ID]["PUNTOS"] = -1;
@@ -168,6 +170,7 @@ class PronosticosController extends ControllerBase
      */
     public function puntuacionesAction()
     {
+        $this->view->setVar('title', 'Puntuaciones');
         $auth = $this->auth->getIdentity();
         $posiciones = Pronosticos::sum(
             array(
