@@ -144,14 +144,19 @@ class Partidos extends \Phalcon\Mvc\Model
      * FROM pronosticos
      * WHERE PARTIDOS_ID = 1
      *
+     * si se acierta al resultado de los penales se pueden obtener 2 puntos adicionales
+     *
      * @param $PARTIDOS_ID
      * @return mixed
      */
-    public function calcularPuntosObtenidos($PARTIDOS_ID, $GOLES_LOCAL, $GOLES_VISITANTE)
+    public function calcularPuntosObtenidos($PARTIDOS_ID, $GOLES_LOCAL, $GOLES_VISITANTE, $fasesNombre)
     {
         $this->db = $this->getDi()->getShared('db');
         $sql = "UPDATE pronosticos 
-SET PUNTOS_USUARIO = IF(" . $GOLES_LOCAL . " = GOLES_LOCAL AND " . $GOLES_VISITANTE . " = GOLES_VISITANTE,5,IF((" . $GOLES_LOCAL . ">" . $GOLES_VISITANTE . " AND GOLES_LOCAL>GOLES_VISITANTE) OR (" . $GOLES_LOCAL . "<" . $GOLES_VISITANTE . " AND GOLES_LOCAL < GOLES_VISITANTE)  OR (" . $GOLES_LOCAL . "=" . $GOLES_VISITANTE . " AND GOLES_LOCAL=GOLES_VISITANTE),3,0)+IF(" . $GOLES_LOCAL . " = GOLES_LOCAL OR " . $GOLES_VISITANTE . " = GOLES_VISITANTE, 1,0)) 
+SET PUNTOS_USUARIO =
+  IF('" . $fasesNombre . "' like '%penales%',IF(" . $GOLES_LOCAL . " <> 0 OR " . $GOLES_VISITANTE . " <> 0,(CASE WHEN " . $GOLES_LOCAL . " = GOLES_LOCAL THEN 1 ELSE 0 END)+ (CASE WHEN " . $GOLES_VISITANTE . " = GOLES_VISITANTE THEN 1 ELSE 0 END),0),
+    IF(" . $GOLES_LOCAL . " = GOLES_LOCAL AND " . $GOLES_VISITANTE . " = GOLES_VISITANTE,5,IF((" . $GOLES_LOCAL . ">" . $GOLES_VISITANTE . " AND GOLES_LOCAL>GOLES_VISITANTE) OR (" . $GOLES_LOCAL . "<" . $GOLES_VISITANTE . " AND GOLES_LOCAL < GOLES_VISITANTE)  OR (" . $GOLES_LOCAL . "=" . $GOLES_VISITANTE . " AND GOLES_LOCAL=GOLES_VISITANTE),3,0)+IF(" . $GOLES_LOCAL . " = GOLES_LOCAL OR " . $GOLES_VISITANTE . " = GOLES_VISITANTE, 1,0))
+  )
 WHERE PARTIDOS_ID = " . $PARTIDOS_ID;
         $this->db->execute($sql);
         return true;
