@@ -31,7 +31,11 @@ Este sistema fue desarrollado y probado con:
 
 ## Base de datos
 * Crear una base de datos en el servidor Mysql con el nombre "dozmaz365"
-* Crear un usuario de base de datos que solo tenga acceso a esta base de datos "GRANT ALL PRIVILEGES ON dozmaz365.* To 'admin365'@'localhost' IDENTIFIED BY '.#20-My-Sql-16.#';" (Cambiar la contraseña antes de ejecutar la instrucción sql)
+* Crear un usuario de base de datos que solo tenga acceso a esta base de datos:
+
+"GRANT ALL PRIVILEGES ON dozmaz365.* To 'admin365'@'localhost' IDENTIFIED BY '.#20-My-Sql-16.#';" 
+
+(Cambiar la contraseña antes de ejecutar la instrucción sql)
 * Restaurar el backup contenido en la carpeta schema
  
 ## Configuración del sistema
