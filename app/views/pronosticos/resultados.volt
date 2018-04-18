@@ -25,10 +25,10 @@
         {% else %}
             <tr>
                 {% if pronostico['USUARIO_ID'] == usuario_id %}
-                    <td class="label-success"><strong>{{ pronostico['NOMBRE'] }}</strong></td>
-                    <td class="text-center label-success"><strong>{{ pronostico['LOCAL'] }}</strong></td>
-                    <td class="text-center label-success"><strong>{{ pronostico['VISITANTE'] }}</strong></td>
-                    <td class="text-center label-success"><strong>{{ pronostico['PUNTOS'] }}</strong></td>
+                    <td class="text-danger"><strong>{{ pronostico['NOMBRE'] }}</strong></td>
+                    <td class="text-center text-danger"><strong>{{ pronostico['LOCAL'] }}</strong></td>
+                    <td class="text-center text-danger"><strong>{{ pronostico['VISITANTE'] }}</strong></td>
+                    <td class="text-center text-danger"><strong>{{ pronostico['PUNTOS'] }}</strong></td>
                 {% else %}
                     <td>{{ pronostico['NOMBRE'] }}</td>
                     <td class="text-center">{{ pronostico['LOCAL'] }}</td>

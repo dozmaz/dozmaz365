@@ -1,4 +1,5 @@
 <?php
+
 namespace Dozmaz365\Controllers;
 
 use Phalcon\Mvc\Model\Criteria;
@@ -134,13 +135,14 @@ class EquiposController extends ControllerBase
                     $tipo = $file->getKey();
                     $archivoNombre = $tipo . "_";
                     // $data = addslashes ( file_get_contents ( $archivoPath ) );
-                    $data = addslashes($this->redimensionar_imagen($archivoPath, $this->imgNewWidth, $this->imgNewHeigth, $file->getExtension()));
+//                    $data = addslashes($this->redimensionar_imagen($archivoPath, $this->imgNewWidth, $this->imgNewHeigth, $file->getExtension()));
+                    $data = file_get_contents($archivoPath);
                     $equipo->LOGO = $data;
                 }
             }
         }
 
-        $equipo->AUD_ESTADO = $this->request->getPost("AUD_ESTADO");
+        $equipo->AUD_ESTADO = 1;
         $equipo->AUD_FECHA = new \Phalcon\Db\RawValue('now()');
         $auth = $this->auth->getIdentity();
         $equipo->AUD_USUARIO = $auth['id'];
@@ -162,7 +164,7 @@ class EquiposController extends ControllerBase
 
         $this->dispatcher->forward(array(
             'controller' => "equipos",
-            'action' => 'index'
+            'action' => 'search'
         ));
     }
 
@@ -197,9 +199,27 @@ class EquiposController extends ControllerBase
         }
 
         $equipo->NOMBRE = $this->request->getPost("NOMBRE");
-        $equipo->LOGO = $this->request->getPost("LOGO");
-        $equipo->AUD_ESTADO = $this->request->getPost("AUD_ESTADO");
-        $equipo->AUD_FECHA = new \Phalcon\Db\RawValue('now()');
+
+        if ($this->request->hasFiles() == true) {
+            $archivoExtension = $archivoNombre = "";
+            foreach ($this->request->getUploadedFiles() as $file) {
+                if (trim($file->getTempName()) != "") {
+                    $archivoExtension = $file->getType();
+                    $archivoNombre = $file->getName();
+                    $archivoPath = $file->getTempName();
+                    $tipo = $file->getKey();
+                    $archivoNombre = $tipo . "_";
+                    // $data = addslashes ( file_get_contents ( $archivoPath ) );
+//                    $data = addslashes($this->redimensionar_imagen($archivoPath, $this->imgNewWidth, $this->imgNewHeigth, $file->getExtension()));
+                    $data = file_get_contents($archivoPath);
+                    $equipo->LOGO = $data;
+                    break;
+                }
+            }
+        }
+
+//        $equipo->AUD_ESTADO = $this->request->getPost("AUD_ESTADO");
+//        $equipo->AUD_FECHA = new \Phalcon\Db\RawValue('now()');
         $auth = $this->auth->getIdentity();
         $equipo->AUD_USUARIO = $auth['id'];
 
@@ -222,7 +242,7 @@ class EquiposController extends ControllerBase
 
         $this->dispatcher->forward(array(
             'controller' => "equipos",
-            'action' => 'index'
+            'action' => 'search'
         ));
     }
 

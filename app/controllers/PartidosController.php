@@ -14,7 +14,7 @@ class PartidosController extends ControllerBase
     {
         parent::initialize();
         $this->view->setTemplateBefore('private');
-        $this->view->setVar('title', 'Equipos');
+        $this->view->setVar('title', 'Partidos');
     }
 
     /**
@@ -74,7 +74,7 @@ class PartidosController extends ControllerBase
         $this->tag->setDefault("GOLES_VISITANTE", 0);
         $this->tag->setDefault("PENALES_LOCAL", 0);
         $this->tag->setDefault("PENALES_VISITANTE", 0);
-        $this->tag->setDefault("FECHA", "2016-06-11 20:00:00");
+        $this->tag->setDefault("FECHA", "2018-06-28 08:00:00");
         $this->tag->setDefault("AUD_ESTADO", 1);
     }
 
@@ -160,7 +160,7 @@ class PartidosController extends ControllerBase
 
         $this->dispatcher->forward(array(
             'controller' => "partidos",
-            'action' => 'search'
+            'action' => 'index'
         ));
     }
 
@@ -228,7 +228,7 @@ class PartidosController extends ControllerBase
 
         $this->dispatcher->forward(array(
             'controller' => "partidos",
-            'action' => 'search'
+            'action' => 'index'
         ));
     }
 
@@ -241,29 +241,24 @@ class PartidosController extends ControllerBase
         $auth = $this->auth->getIdentity();
         $usuarios = Usuarios::find("aud_estado = 1 ORDER BY nombre");
         $pronosticos = new Pronosticos();
-        $fechaPartidoEnJuego = strtotime('+2 hour', strtotime($partido->FECHA));
-        $fechaPartidoEnJuego = date('Y-m-d H:i:s', $fechaPartidoEnJuego);
-        //completar ´pronósticos para partidos que no se estén jugando
-        if (true) {//$pronosticos->permitidoModificar($fechaPartidoEnJuego)) {
-            //Completar pronósticos para partidos que ya iniciaron su juego
-            if (!$pronosticos->permitidoModificar($partido->FECHA)) {
-                foreach ($usuarios as $usuario) {
-                    $pronostico = Pronosticos::findFirst("PARTIDOS_ID = " . $partido->PARTIDOS_ID . " AND USUARIOS_ID = " . $usuario->id);
-                    if (!$pronostico) {
-                        $pronostico = new Pronosticos();
-                        $pronostico->GOLES_LOCAL = 0;
-                        $pronostico->GOLES_VISITANTE = 0;
-                        $pronostico->PUNTOS_USUARIO = 0;
-                        $pronostico->PARTIDOS_ID = $partido->PARTIDOS_ID;
-                        $pronostico->USUARIOS_ID = $usuario->id;
-                        $pronostico->AUD_USUARIO = $auth['id'];
-                        $pronostico->AUD_FECHA = new \Phalcon\Db\RawValue('now()');
-                        $pronostico->AUD_ESTADO = 1;
-                        $pronostico->save();
-                    }
+        //mostrar los partidos que ya iniciaron su juego
+        if (!$pronosticos->permitidoModificar($partido->FECHA)) {
+            foreach ($usuarios as $usuario) {
+                $pronostico = Pronosticos::findFirst("PARTIDOS_ID = " . $partido->PARTIDOS_ID . " AND USUARIOS_ID = " . $usuario->id);
+                if (!$pronostico) {
+                    $pronostico = new Pronosticos();
+                    $pronostico->GOLES_LOCAL = 0;
+                    $pronostico->GOLES_VISITANTE = 0;
+                    $pronostico->PUNTOS_USUARIO = 0;
+                    $pronostico->PARTIDOS_ID = $partido->PARTIDOS_ID;
+                    $pronostico->USUARIOS_ID = $usuario->id;
+                    $pronostico->AUD_USUARIO = $auth['id'];
+                    $pronostico->AUD_FECHA = new \Phalcon\Db\RawValue('now()');
+                    $pronostico->AUD_ESTADO = 1;
+                    $pronostico->save();
                 }
-                $partido->calcularPuntosObtenidos($partido->PARTIDOS_ID, $partido->GOLES_LOCAL, $partido->GOLES_VISITANTE, $partido->Fases->NOMBRE, $partido->PENALES_LOCAL, $partido->PENALES_VISITANTE);
             }
+            $partido->calcularPuntosObtenidos($partido->PARTIDOS_ID, $partido->GOLES_LOCAL, $partido->GOLES_VISITANTE);
         }
     }
 
@@ -287,6 +282,7 @@ class PartidosController extends ControllerBase
         }
 
         if (!$partido->delete()) {
+
             foreach ($partido->getMessages() as $message) {
                 $this->flash->error($message);
             }
@@ -303,7 +299,7 @@ class PartidosController extends ControllerBase
 
         $this->dispatcher->forward(array(
             'controller' => "partidos",
-            'action' => "search"
+            'action' => "index"
         ));
     }
 

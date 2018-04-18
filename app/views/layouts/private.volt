@@ -1,134 +1,102 @@
-{{ stylesheet_link('icheck/skins/flat/green.css') }}
-{{ javascript_include('icheck/icheck.min.js') }}
+{#{{ stylesheet_link('icheck/skins/flat/green.css') }}#}
+{#{{ javascript_include('icheck/icheck.min.js') }}#}
+<body class="app sidebar-mini rtl">
+<!-- Navbar-->
+<header class="app-header"><a class="app-header__logo" href="index.html"><i class="fa fa-lg fa-fw fa-futbol-o"></i>
+        Pronósticos</a>
+    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
+                                    aria-label="Hide Sidebar"></a>
+    <!-- Navbar Right Menu-->
+    <ul class="app-nav">
+        <li class="dropdown">
+            {{ link_to('session/logout', '<i class="fa fa-sign-out fa-lg"></i>','title':'Salir','alt':'Salir', 'class':"app-nav__item" ) }}
+        </li>
 
-<body class="nav-md">
-<div class="container body">
-    <div class="main_container">
-        <div class="col-md-3 left_col">
-            <div class="left_col scroll-view">
-                <div class="navbar nav_title navbar-fixed-top" style="border: 0;">
-                    <a href="#" class="site_title"><i class="fa fa-line-chart"></i>
-                        <span>Pronosticos</span></a>
-                </div>
-
-                <div class="clearfix"></div>
-
-                <!-- menu profile quick info -->
-                <div class="profile">
-                    <div class="profile_pic">
-                        {{ fotoPerfil }}
-                    </div>
-                    <div class="profile_info">
-                        <span>Bienvenido,</span>
-                        <h2>{{ auth.getName() }}</h2>
-                    </div>
-                </div>
-                <!-- /menu profile quick info -->
-
-                <br/>
-                <div class="clearfix"></div>
-                <!-- sidebar menu -->
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                    <div class="menu_section">
-                        <ul class="nav side-menu">
-                            <li>
-                                {%- set menus = [
-                                '<i class="fa fa-soccer-ball-o"></i> Pron&oacute;sticos': 'pronosticos/index',
-                                '<i class="fa fa-bar-chart-o"></i> Puntuaciones usuarios': 'pronosticos/puntuaciones',
-                                '<i class="fa fa-table"></i> Resultados partidos': 'pronosticos/resultados'
-                                ] -%}
-                                {%- for key, value in menus %}
-                                {% if value == dispatcher.getControllerName() %}
-                            <li class="active">{{ link_to(value, key) }}</li>
-                            {% else %}
-                                <li>{{ link_to(value, key) }}</li>
-                            {% endif %}
-                            {%- endfor -%}
-                            </li>
-                        </ul>
-                    </div>
-                    {% if auth.getProfile() == "ADMINISTRADOR" %}
-                    <div class="menu_section">
-                        <h3>Configuraci&oacute;n</h3>
-                        <ul class="nav side-menu">
-                            <li><a><i class="fa fa-users"></i> Usuarios <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    {%- set menus = [
-                                    'Usuarios': 'usuarios',
-                                    'Perfiles': 'perfiles',
-                                    'Permisos': 'permisos'
-                                    ] -%}
-                                    {%- for key, value in menus %}
-                                        {% if value == dispatcher.getControllerName() %}
-                                            <li class="active">{{ link_to(value, key) }}</li>
-                                        {% else %}
-                                            <li>{{ link_to(value, key) }}</li>
-                                        {% endif %}
-                                    {%- endfor -%}
-                                </ul>
-                            </li>
-                            <li><a><i class="fa fa-gears"></i> Partidos <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    {%- set menus = [
-                                    'Campeonatos': 'campeonatos',
-                                    'Fases': 'fases',
-                                    'Equipos': 'equipos',
-                                    'Partidos': 'partidos'
-                                    ] -%}
-                                    {%- for key, value in menus %}
-                                        {% if value == dispatcher.getControllerName() %}
-                                            <li class="active">{{ link_to(value, key) }}</li>
-                                        {% else %}
-                                            <li>{{ link_to(value, key) }}</li>
-                                        {% endif %}
-                                    {%- endfor -%}
-                                </ul>
-                            </li>
-                            <li>
-                                {{ link_to('session/logout', '<i class="fa fa-sign-out"></i> Cerrar sesi&oacute;n') }}
-                            </li>
-                        </ul>
-                    </div>
-                    {% endif %}
-                </div>
-                <!-- /sidebar menu -->
-            </div>
+    </ul>
+</header>
+<!-- Sidebar menu-->
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<aside class="app-sidebar">
+    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar"
+                                        src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
+                                        alt="User Image">
+        <div>
+            <p class="app-sidebar__user-name">{{ auth.getName() }}</p>
+            <p class="app-sidebar__user-designation">{{ auth.getProfile() }}</p>
         </div>
-
-        <!-- top navigation -->
-        <div class="top_nav navbar navbar-fixed-top">
-
-            <div class="nav_menu">
-                <nav class="" role="navigation">
-                    <div class="col-md-1 col-xs-3 col-sm-3 col-lg-1 row">
-                        <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-8 col-xs-6 col-sm-8 col-lg-9 titulo row">
-                        <h2>{{ title }}</h2>
-                    </div>
-                </nav>
-            </div>
-
-        </div>
-        <!-- /top navigation -->
-
-
-        <!-- page content -->
-        <div class="right_col custom_page_content" role="main">
-            {{ content() }}
-        </div>
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Sistema de pronosticos
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
     </div>
-</div>
+    <ul class="app-menu">
+        <li>{% if "index" == dispatcher.getControllerName() %}
+                {{ link_to("index", '<i class="app-menu__icon fa fa-home"></i><span class="app-menu__label">Inicio</span>', 'class':'app-menu__item active') }}
+            {% else %}
+                {{ link_to("index", '<i class="app-menu__icon fa fa-home"></i><span class="app-menu__label">Inicio</span>', 'class':'app-menu__item') }}
+            {% endif %}
+        </li>
+
+        {%- set menus = [
+            '<i class="fa fa-soccer-ball-o"></i>&nbsp; Pron&oacute;sticos': 'pronosticos/index',
+            '<i class="fa fa-bar-chart-o"></i>&nbsp; Puntuaciones usuarios': 'pronosticos/puntuaciones',
+            '<i class="fa fa-table"></i>&nbsp; Resultados partidos': 'pronosticos/resultados'
+        ] -%}
+        {%- for key, value in menus %}
+            {% if value == dispatcher.getControllerName()~"/"~dispatcher.getActionName() %}
+                <li>{{ link_to(value, key, 'class':'app-menu__item active') }}</li>
+            {% else %}
+                <li>{{ link_to(value, key, 'class':'app-menu__item') }}</li>
+            {% endif %}
+        {%- endfor -%}
+        {% if auth.getProfile() == "ADMINISTRADOR" %}
+            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+                            class="app-menu__icon fa fa-gears"></i><span
+                            class="app-menu__label">Configuraci&oacute;n</span><i
+                            class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                    {%- set menus = [
+                        'Usuarios': 'usuarios',
+                        'Perfiles': 'perfiles',
+                        'Permisos': 'permisos'
+                    ] -%}
+                    {%- for key, value in menus %}
+                        {% if value == dispatcher.getControllerName() %}
+                            <li>{{ link_to(value, key, 'class':'treeview-item active') }}</li>
+                        {% else %}
+                            <li>{{ link_to(value, key, 'class':'treeview-item') }}</li>
+                        {% endif %}
+                    {%- endfor -%}
+                </ul>
+            </li>
+            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+                            class="app-menu__icon fa fa-chevron-down"></i><span
+                            class="app-menu__label">Partidos</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                    {%- set menus = [
+                        'Campeonatos': 'campeonatos',
+                        'Fases': 'fases',
+                        'Equipos': 'equipos',
+                        'Partidos': 'partidos'
+                    ] -%}
+                    {%- for key, value in menus %}
+                        {% if value == dispatcher.getControllerName() %}
+                            <li>{{ link_to(value, key, 'class':'treeview-item active') }}</li>
+                        {% else %}
+                            <li>{{ link_to(value, key, 'class':'treeview-item') }}</li>
+                        {% endif %}
+                    {%- endfor -%}
+                </ul>
+            </li>
+        {% endif %}
+
+    </ul>
+</aside>
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-futbol-o"></i> {{ title }}</h1>
+        </div>
+    </div>
+
+    {{ content() }}
+
+</main>
+
 </body>

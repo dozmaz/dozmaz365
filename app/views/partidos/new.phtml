@@ -3,102 +3,101 @@
  * @var \Phalcon\Mvc\View\Engine\Php $this
  */
 ?>
-
 <div class="row">
-    <nav>
-        <ul class="pager">
-            <li class="previous"><?php echo $this->tag->linkTo(array("partidos", "Go Back")) ?></li>
-        </ul>
-    </nav>
-</div>
+    <div class="col-12">
 
-<div class="page-header">
-    <h1>
-        Create partidos
-    </h1>
-</div>
+        <?php
+        echo $this->tag->form(
+            array(
+                "partidos/create",
+                "enctype"=>"multipart/form-data",
+                "class" => "form-horizontal"
+            )
+        );
+        ?>
 
-<?php echo $this->getContent(); ?>
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h3 class="title">Nuevo</h3>
+                <div class="btn-group">
+                    <?php echo $this->tag->linkTo(array("partidos", "<i class='fa fa-lg fa-backward'></i> Atrás", "class" => "btn btn-primary")) ?>
+                </div>
+            </div>
+            <div class="tile-body">
+                <?php echo $this->getContent(); ?>
 
-<?php
-echo $this->tag->form(
-    array(
-        "partidos/create",
-        "autocomplete" => "off",
-        "class" => "form-horizontal"
-    )
-);
-?>
+                <div class="form-group row">
+                    <label for="fieldFasesId" class="col-sm-2 control-label">FASE</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->select(array("FASES_ID", \Dozmaz365\Models\Fases::find(), "using" => array("FASES_ID", "NOMBRE"), "class" => "form-control", "id" => "fieldFasesId")) ?>
+                    </div>
+                </div>
 
+                <div class="form-group row">
+                    <label for="fieldFecha" class="col-sm-2 control-label">FECHA</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->dateTimeLocalField(array("FECHA", "size" => 30, "class" => "form-control", "id" => "fieldFecha")) ?>
+                    </div>
+                </div>
 
-<div class="form-group">
-    <label for="fieldFasesId" class="col-sm-2 control-label">FASE</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->select(array("FASES_ID", \Dozmaz365\Models\Fases::find(), "using" => array("FASES_ID", "NOMBRE"), "class" => "form-control", "id" => "fieldFasesId")) ?>
+                <div class="form-group row">
+                    <label for="fieldLocal" class="col-sm-2 control-label">LOCAL</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->select(array("LOCAL", \Dozmaz365\Models\Equipos::find(), "using" => array("EQUIPOS_ID", "NOMBRE"), "class" => "form-control", "id" => "fieldLocal")) ?>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fieldVisitante" class="col-sm-2 control-label">VISITANTE</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->select(array("VISITANTE", \Dozmaz365\Models\Equipos::find(), "using" => array("EQUIPOS_ID", "NOMBRE"), "class" => "form-control", "id" => "fieldLocal")) ?>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fieldGolesLocal" class="col-sm-2 control-label">GOLES Of LOCAL</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->textField(array("GOLES_LOCAL", "type" => "number", "class" => "form-control", "id" => "fieldGolesLocal")) ?>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fieldGolesVisitante" class="col-sm-2 control-label">GOLES Of VISITANTE</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->textField(array("GOLES_VISITANTE", "type" => "number", "class" => "form-control", "id" => "fieldGolesVisitante")) ?>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fieldPenalesLocal" class="col-sm-2 control-label">PENALES Of LOCAL</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->textField(array("PENALES_LOCAL", "type" => "number", "class" => "form-control", "id" => "fieldPenalesLocal")) ?>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fieldPenalesVisitante" class="col-sm-2 control-label">PENALES Of VISITANTE</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->textField(array("PENALES_VISITANTE", "type" => "number", "class" => "form-control", "id" => "fieldPenalesVisitante")) ?>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fieldAudEstado" class="col-sm-2 control-label">AUD Of ESTADO</label>
+                    <div class="col-sm-10">
+                        <?php echo $this->tag->textField(array("AUD_ESTADO", "type" => "number", "class" => "form-control", "id" => "fieldAudEstado")) ?>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tile-footer">
+                <?php echo $this->tag->submitButton(array("Guardar", "class" => "btn btn-warning")) ?>
+            </div>
+        </div>
+
+        <?php echo $this->tag->endForm(); ?>
+
     </div>
+
+
 </div>
-
-<div class="form-group">
-    <label for="fieldFecha" class="col-sm-2 control-label">FECHA</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->dateField(array("FECHA", "size" => 30, "class" => "form-control", "id" => "fieldFecha")) ?>
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="fieldLocal" class="col-sm-2 control-label">LOCAL</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->select(array("LOCAL", \Dozmaz365\Models\Equipos::find(), "using" => array("EQUIPOS_ID", "NOMBRE"), "class" => "form-control", "id" => "fieldLocal")) ?>
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="fieldVisitante" class="col-sm-2 control-label">VISITANTE</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->select(array("VISITANTE", \Dozmaz365\Models\Equipos::find(), "using" => array("EQUIPOS_ID", "NOMBRE"), "class" => "form-control", "id" => "fieldLocal")) ?>
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="fieldGolesLocal" class="col-sm-2 control-label">GOLES Of LOCAL</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->textField(array("GOLES_LOCAL", "type" => "number", "class" => "form-control", "id" => "fieldGolesLocal")) ?>
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="fieldGolesVisitante" class="col-sm-2 control-label">GOLES Of VISITANTE</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->textField(array("GOLES_VISITANTE", "type" => "number", "class" => "form-control", "id" => "fieldGolesVisitante")) ?>
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="fieldPenalesLocal" class="col-sm-2 control-label">PENALES Of LOCAL</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->textField(array("PENALES_LOCAL", "type" => "number", "class" => "form-control", "id" => "fieldPenalesLocal")) ?>
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="fieldPenalesVisitante" class="col-sm-2 control-label">PENALES Of VISITANTE</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->textField(array("PENALES_VISITANTE", "type" => "number", "class" => "form-control", "id" => "fieldPenalesVisitante")) ?>
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="fieldAudEstado" class="col-sm-2 control-label">AUD Of ESTADO</label>
-    <div class="col-sm-10">
-        <?php echo $this->tag->textField(array("AUD_ESTADO", "type" => "number", "class" => "form-control", "id" => "fieldAudEstado")) ?>
-    </div>
-</div>
-
-
-<div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-        <?php echo $this->tag->submitButton(array("Guardar", "class" => "btn btn-default")) ?>
-    </div>
-</div>
-
-<?php echo $this->tag->endForm(); ?>

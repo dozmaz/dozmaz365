@@ -5,68 +5,76 @@
 ?>
 
 <?php use Phalcon\Tag; ?>
-<h1>Buscar partidos</h1>
+
 
 <div class="row">
-<?php echo $this->tag->linkTo(array("partidos/index", "Atr&aacute;s","class" => "btn btn-default")); ?>
-<?php echo $this->tag->linkTo(array("partidos/new", "Crear ","class" => "btn btn-primary")); ?>
-</div>
-
-<?php echo $this->getContent(); ?>
-
-<div class="row">
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <!--<th>PARTIDOS Of ID</th>-->
-                <th>Local</th>
-                <th>Visitante</th>
-                <th>Goles<br/>Local</th>
-                <th>Goles<br/>Visitante</th>
-                <!--<th>PENALES Of LOCAL</th>
-                <th>PENALES Of VISITANTE</th>-->
-                <th>Fase</th>
-                <th width="50px;">Fecha</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($page->items as $partido): ?>
-                <tr>
-                    <!--<td><?php echo $partido->PARTIDOS_ID ?></td>-->
-                    <td><?php echo $partido->getLocal()->NOMBRE ?></td>
-                    <td><?php echo $partido->getVisitante()->NOMBRE ?></td>
-                    <td><?php echo $partido->GOLES_LOCAL ?></td>
-                    <td><?php echo $partido->GOLES_VISITANTE ?></td>
-                    <!--<td><?php echo $partido->PENALES_LOCAL ?></td>
-                    <td><?php echo $partido->PENALES_VISITANTE ?></td>-->
-                    <td><?php echo $partido->FASES->NOMBRE ?></td>
-                    <td><?php echo $partido->FECHA ?></td>
-                    <td><?php echo $this->tag->linkTo(array("partidos/edit/" . $partido->PARTIDOS_ID, "Editar")); ?></td>
-                    <td><?php echo $this->tag->linkTo(array("partidos/delete/" . $partido->PARTIDOS_ID, "Eliminar")); ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-1">
-        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
-            <?php echo $page->current, "/", $page->total_pages ?>
-        </p>
-    </div>
-    <div class="col-sm-11">
-        <nav>
-            <ul class="pagination">
-                <li><?php echo $this->tag->linkTo("partidos/search", "Primero") ?></li>
-                <li><?php echo $this->tag->linkTo("partidos/search?page=" . $page->before, "Anterior") ?></li>
-                <li><?php echo $this->tag->linkTo("partidos/search?page=" . $page->next, "Siguiente") ?></li>
-                <li><?php echo $this->tag->linkTo("partidos/search?page=" . $page->last, "Último") ?></li>
-            </ul>
-        </nav>
+    <div class="col-12">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h3 class="title">Resultados</h3>
+                <div class="btn-group">
+                    <?php echo $this->tag->linkTo(array("partidos/search", "<i class='fa fa-lg fa-backward'></i> Atrás", "class" => "btn btn-primary")) ?>
+                    <?php echo $this->tag->linkTo(array("partidos/new", "<i class='fa fa-lg fa-plus'></i> Nuevo", "class" => "btn btn-primary")) ?>
+                </div>
+            </div>
+            <div class="tile-body">
+                <?php echo $this->getContent() ?>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+<!--                            <th>ID</th>-->
+                            <th>Local</th>
+                            <th>Visitante</th>
+                            <th>Gloes Local</th>
+                            <th>Goles Visita</th>
+                            <th>Penales Local</th>
+                            <th>Penales Visita</th>
+                            <th>Fase</th>
+                            <th>Fecha</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($page->items as $partido): ?>
+                            <tr>
+<!--                                <td>--><?php //echo $partido->PARTIDOS_ID ?><!--</td>-->
+                                <td><?php echo $partido->getLocal()->NOMBRE ?></td>
+                                <td><?php echo $partido->getVisitante()->NOMBRE ?></td>
+                                <td><?php echo $partido->GOLES_LOCAL ?></td>
+                                <td><?php echo $partido->GOLES_VISITANTE ?></td>
+                                <td><?php echo $partido->PENALES_LOCAL ?></td>
+                                <td><?php echo $partido->PENALES_VISITANTE ?></td>
+                                <td><?php echo $partido->FASES->NOMBRE ?></td>
+                                <td><?php echo $partido->FECHA ?></td>
+                                <td><?php echo $this->tag->linkTo(array("partidos/edit/" . $partido->PARTIDOS_ID, "Editar")); ?></td>
+                                <td><?php echo $this->tag->linkTo(array("partidos/delete/" . $partido->PARTIDOS_ID, "Eliminar")); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tile-footer">
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info" id="sampleTable_info" role="status" aria-live="polite">
+                            <?php echo $page->current, "/", $page->total_pages ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="sampleTable_paginate">
+                            <ul class="pagination">
+                                <li class="paginate_button page-item "><?php echo $this->tag->linkTo(array("partidos/search", "Primero", "class" => "page-link")) ?></li>
+                                <li class="paginate_button page-item "><?php echo $this->tag->linkTo(array("partidos/search?page=" . $page->before, "Anterior", "class" => "page-link")) ?></li>
+                                <li class="paginate_button page-item "><?php echo $this->tag->linkTo(array("partidos/search?page=" . $page->next, "Siguiente", "class" => "page-link")) ?></li>
+                                <li class="paginate_button page-item "><?php echo $this->tag->linkTo(array("partidos/search?page=" . $page->last, "Último", "class" => "page-link")) ?></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

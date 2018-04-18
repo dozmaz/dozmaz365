@@ -41,8 +41,8 @@ return new \Phalcon\Config(array(
         'filename' => 'application.log'
     ),
     'ldap' => array(
-        'servidor' => '127.0.0.1',
-        'dominio' => 'midominio.com',
-        'dn' => 'dc=dominio,dc=com'
+        'servidor' => '172.17.0.4',
+        'dominio' => 'pevd.gob.bo',
+        'dn' => 'dc=pevd,dc=gob,dc=bo'
     )
 ));

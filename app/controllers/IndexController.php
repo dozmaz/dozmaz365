@@ -6,6 +6,11 @@ namespace Dozmaz365\Controllers;
  */
 class IndexController extends ControllerBase
 {
+    public function initialize()
+    {
+        parent::initialize();
+    }
+
     /**
      * Default action. Set the public layout (layouts/public.volt)
      */

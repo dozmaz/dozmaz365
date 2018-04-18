@@ -1,60 +1,56 @@
-{{ content() }}
-<br/>
-<div class="container">
-<div class="col-md-4 col-sm-3 col-xs-1"></div>
-<div class="col-md-4 col-sm-6 col-xs-10 center-block">
-    {{ form('class': 'form-search', 'novalidate':'novalidate', 'role':'login') }}
-        <div class="panel panel-default">
-
-            <div class="panel-heading text-center">
-                <h2><i class="fa fa-line-chart" style="font-size: 26px;"></i> Pronosticos</h2>
-            </div>
-            <div class="panel-body">
-                <div class="item form-group">
-                    {{ form.render('email',["class":"form-control input-lg","required":"required"]) }}
+<section class="material-half-bg">
+    <div class="cover"></div>
+</section>
+<section class="login-content">
+    {{ content() }}
+    <div class="logo">
+        <h1><i class="fa fa-lg fa-fw fa-futbol-o"></i> Pron&oacute;sticos</h1>
+    </div>
+    <div class="login-box">
+        {{ form('class': 'login-form', 'novalidate':'novalidate', 'role':'login') }}
+        <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>INGRESAR</h3>
+        <div class="form-group">
+            <label class="control-label">USUARIO</label>
+            {{ form.render('email',["class":"form-control input-lg","required":"required", "autofocus"]) }}
+        </div>
+        <div class="form-group">
+            <label class="control-label">CONTRASE&Ntilde;A</label>
+            {{ form.render('password',["class":"form-control input-lg","required":"required"]) }}
+        </div>
+        <div class="form-group">
+            <div class="utility">
+                <div class="animated-checkbox">
+                    <label>
+                        <input type="checkbox"><span class="label-text">Recordarme</span>
+                    </label>
                 </div>
-                <div class="item form-group">
-                    {{ form.render('password',["class":"form-control input-lg","required":"required"]) }}
-                </div>
-                {#
-                <div class="form-group text-center">
-                    {{ form.render('remember',["class":""]) }}
-                    {{ form.label('remember',["class":""]) }}
-                </div>
-                #}
-                <div class="form-group">
-                    {{ form.render('go',['class':'btn btn-lg btn-primary btn-block']) }}
-                </div>
-                {#
-                <div class="form-group text-center">
-                    {{ link_to('session/signup', '<i class="fa fa-check"></i> Crear una cuenta', 'class': 'to_register') }}
-                    o {{ link_to("session/forgotPassword", "Perdi&oacute; su contrase&ntilde;a?", 'class':"reset_pass") }}
-                </div>
-                #}
+                <p class="semibold-text mb-2"><a href="#" data-toggle="flip">Olvid&oacute; su contrase&ntilde;a?</a></p>
             </div>
         </div>
-    {{ form.render('csrf', ['value': security.getToken()]) }}
-    {{ endForm() }}
-</div>
-<div class="col-md-4 col-sm-3 col-xs-1"></div>
-</div>
-{{ javascript_include('js/validarFormulario.js') }}
-<style type="text/css">
-    .container {
-        padding-top: 60px;
-    }
+        <div class="form-group btn-container">
+            {{ form.render('go',['class':'btn btn-lg btn-primary btn-block']) }}
+        </div>
+        {{ form.render('csrf', ['value': security.getToken()]) }}
+        {{ endForm() }}
+        <form class="forget-form" action="index.html">
+            <h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>Olvid&oacute; su contrase&ntilde;a ?</h3>
+            <div class="form-group">
+                <label class="control-label">Contactese con el administrador del sitio</label>
+            </div>
+            <div class="form-group mt-3">
+                <p class="semibold-text mb-0"><a href="#" data-toggle="flip"><i class="fa fa-angle-left fa-fw"></i> Regresar al inicio</a></p>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- Essential javascripts for application to work-->
 
-    .panel {
-        color: #5d5d5d;
-        background: #f2f2f2;
-        padding: 16px;
-        border-radius: 10px;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-    }
-    input[type="text"],input[type="password"],input[type="submit"]{
-        border-radius: 5px;
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-    }
-</style>
+<!-- The javascript plugin to display page loading on top-->
+{{ javascript_include('js/plugins/pace.min.js') }}
+<script type="text/javascript">
+    // Login Page Flipbox control
+    $('.login-content [data-toggle="flip"]').click(function () {
+        $('.login-box').toggleClass('flipped');
+        return false;
+    });
+</script>
