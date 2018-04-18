@@ -37,7 +37,7 @@ class LoginForm extends Form
         ));
 
         $password->addValidator(new PresenceOf(array(
-            'message' => 'La contrase&ntilde;a es requerida'
+            'message' => 'La contraseña es requerida'
         )));
 
         $password->clear();
