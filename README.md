@@ -47,3 +47,5 @@ Este sistema fue desarrollado y probado con:
 ## Licencia
 Sistema de pronosticos by Guido Cutipa Yujra is licensed under a Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional License http://creativecommons.org/licenses/by-nc-sa/4.0/
 Creado a partir de la obra en https://github.com/dozmaz/dozmaz365.
+
+https://guidocutipa.blog.bo/
